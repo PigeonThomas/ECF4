@@ -1,0 +1,43 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecf4-web
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: coursportfolio
+      DB_USER: app
+      DB_PASSWORD: app_password
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.0
+    container_name: ecf4-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: coursportfolio
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app_password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      start_period: 90s
+      timeout: 5s
+      retries: 10
+      interval: 5s
+
+volumes:
+  mysql_data:
