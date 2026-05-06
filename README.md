@@ -42,3 +42,34 @@ Quand l'utilisateur remplit correctement le formulaire :
 Quand le formulaire est incomplet ou que l'envoi échoue :
 
 - un message d'erreur s'affiche dans la page
+
+## Lancement avec Docker
+
+Depuis la racine du projet :
+
+```bash
+docker compose up --build -d
+```
+
+Acces utiles :
+
+- application : http://localhost:8080
+- base MySQL : localhost:3307
+
+Parametres MySQL configures dans Docker Compose :
+
+- base : coursportfolio
+- utilisateur : app
+- mot de passe : app_password
+
+Pour arreter les conteneurs :
+
+```bash
+docker compose down
+```
+
+Pour reinitialiser aussi la base de donnees Docker :
+
+```bash
+docker compose down -v
+```
