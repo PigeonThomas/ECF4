@@ -10,15 +10,18 @@ class DbConnect
     protected $connection;
     protected $request;
 
-    const SERVER = 'localhost';
-    const USER = 'root';
-    const PASSWORD = '';
-    const BASE = 'coursportfolio';
-
     public function __construct()
     {
         try {
-            $this->connection = new PDO('mysql:host=' . self::SERVER . ';dbname=' . self::BASE, self::USER, self::PASSWORD);
+            $host = getenv('DB_HOST') ?: 'localhost';
+            $port = getenv('DB_PORT') ?: '3306';
+            $database = getenv('DB_NAME') ?: 'coursportfolio';
+            $user = getenv('DB_USER') ?: 'root';
+            $password = getenv('DB_PASSWORD') ?: '';
+
+            $dsn = 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database . ';charset=utf8mb4';
+
+            $this->connection = new PDO($dsn, $user, $password);
 
             // Activation des erreurs PDO
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
