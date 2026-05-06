@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?controller=creation&action=index">Mes créations</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?controller=contact&action=index">Contact</a>
+                        </li>
                     </ul>
                 </div>
             </div>
